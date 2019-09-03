@@ -104,9 +104,16 @@ GEM
     nio4r (2.5.1)
     nokogiri (1.10.4)
       mini_portile2 (~> 2.4.0)
+    oauth (0.5.4)
     omniauth (1.9.0)
       hashie (>= 3.4.6, < 3.7.0)
       rack (>= 1.6.2, < 3)
+    omniauth-oauth (1.1.0)
+      oauth
+      omniauth (~> 1.0)
+    omniauth-twitter (1.4.0)
+      omniauth-oauth (~> 1.1)
+      rack
     public_suffix (4.0.1)
     puma (3.12.1)
     rack (2.0.7)
@@ -211,6 +218,7 @@ DEPENDENCIES
   jbuilder (~> 2.7)
   listen (>= 3.0.5, < 3.2)
   omniauth
+  omniauth-twitter
   puma (~> 3.11)
   rails (~> 6.0.0)
   sass-rails (~> 5)
