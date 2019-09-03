@@ -3,5 +3,7 @@ Rails.application.routes.draw do
   resources :sessions
   get '/auth/:provider/callback', to: 'sessions#create'
 
+  get 'favorites/sync', to: 'favorite_tweets#sync'
+
   root to: "sessions#index"
 end
