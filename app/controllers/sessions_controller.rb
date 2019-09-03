@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
   def index
     if logged_in?
-      render text: "Logged in!"
+      render plain: "Logged in!"
     else
       redirect_to :new
     end
