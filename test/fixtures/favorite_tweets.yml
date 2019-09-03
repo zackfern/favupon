@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  twitter_id: MyString
+  favorite_count: 1
+  retweet_count: 1
+  favorited_at: 2019-09-02 20:58:36
+  tweeted_at: 2019-09-02 20:58:36
+
+two:
+  user: two
+  twitter_id: MyString
+  favorite_count: 1
+  retweet_count: 1
+  favorited_at: 2019-09-02 20:58:36
+  tweeted_at: 2019-09-02 20:58:36

@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :favorite_tweets
+
   class << self
     # Public: Find or create a User record based off of the Omniauth auth hash.
     # Returns User
