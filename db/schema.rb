@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_03_052057) do
+ActiveRecord::Schema.define(version: 2020_04_04_212843) do
 
   create_table "favorite_tweets", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 2019_09_03_052057) do
     t.datetime "tweeted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "tweeter_id"
+    t.index ["tweeter_id"], name: "index_favorite_tweets_on_tweeter_id"
     t.index ["user_id"], name: "index_favorite_tweets_on_user_id"
   end
 
@@ -32,6 +34,7 @@ ActiveRecord::Schema.define(version: 2019_09_03_052057) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "max_favorited_id"
     t.string "min_favorited_id"
+    t.datetime "last_sync_at"
   end
 
   add_foreign_key "favorite_tweets", "users"

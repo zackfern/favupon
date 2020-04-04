@@ -1,0 +1,10 @@
+<b>Logged in!</b> <br />
+
+You have <%= number_with_delimiter(@favorite_tweets_count) %> favorite tweets.
+
+<% if current_user.last_sync_at.present? %>
+  Last sync was <%= content_tag :span, time_ago_in_words(current_user.last_sync_at), title: current_user.last_sync_at.to_s %> ago.
+  <%= link_to "Sync again?", sync_favorite_tweets_path %>
+<% else %>
+  We still haven't synced your favorites, <%= link_to "do that now", sync_favorite_tweets_path %>!
+<% end %>

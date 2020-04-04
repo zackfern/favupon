@@ -1,12 +1,14 @@
-class ImportFavoritesJob < ApplicationJob
+class SyncFavoritesJob < ApplicationJob
   queue_as :default
 
-  attr_accessor :client, :user, :min_favorited_id
+  attr_accessor :client, :user, :max_favorited_id
 
   def perform(user)
     @user = user
     @client = @user.twitter_client
-    @min_favorited_id = @user.min_favorited_id
+
+    # Set the minimum tweet ID we're looking for to the largest ID we have in our DB.
+    @max_favorited_id = @user.max_favorited_id
 
     @user.update_attribute(:last_sync_at, Time.now)
 
@@ -14,21 +16,19 @@ class ImportFavoritesJob < ApplicationJob
   end
 
   def recursively_fetch_and_save_favorites
-    # Construct default options of count 200, but only specify a Max ID if not nil.
     opts = { count: 200 }
-    opts[:max_id] = min_favorited_id if min_favorited_id
+    Rails.logger.debug "max_favorited_id -> #{max_favorited_id}"
+    opts[:since_id] = max_favorited_id
 
     # Find favorites that are older than our minimum favorited ID.
     favorites = client.favorites(opts)
-
-    # Loop over 'em and save to the database...
     favorites.each do |fav|
       FavoriteTweet.create_for_user_from_tweet(user: user, tweet: fav)
     end
 
-    # Update the minimum favorited ID.
-    @min_favorited_id = favorites.collect(&:id).min
-    updated = user.update_attribute(:min_favorited_id, @min_favorited_id)
+    # Update the maximum favorited ID.
+    @max_favorited_id = favorites.collect(&:id).max
+    user.update_attribute(:max_favorited_id, @max_favorited_id) unless @max_favorited_id.nil?
 
     # If the # of favorites returned was > 199, call again so we can keep paginating...
     if favorites.count > 199

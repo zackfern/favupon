@@ -1,13 +1,10 @@
 class SessionsController < ApplicationController
   def index
     if logged_in?
-      render plain: "Logged in!"
+      redirect_to favorite_tweets_path
     else
-      redirect_to :new
+      redirect_to "/auth/twitter"
     end
-  end
-
-  def new
   end
 
   def create
