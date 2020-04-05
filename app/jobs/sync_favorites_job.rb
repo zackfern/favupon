@@ -7,6 +7,8 @@ class SyncFavoritesJob < ApplicationJob
     @user = user
     @client = @user.twitter_client
 
+    @user.set_max_favorited_id if @user.max_favorited_id.blank?
+
     # Set the minimum tweet ID we're looking for to the largest ID we have in our DB.
     @max_favorited_id = @user.max_favorited_id
 
