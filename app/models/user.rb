@@ -22,17 +22,17 @@ class User < ApplicationRecord
     end
   end
 
-  private
-
-  def enqueue_import
-    ImportFavoritesJob.perform_later(self)
-  end
-
   def set_max_favorited_id
     update_attribute :max_favorited_id, favorite_tweets.pluck(:twitter_id).max
   end
 
   def set_min_favorited_id
     update_attribute :min_favorited_id, favorite_tweets.pluck(:twitter_id).min
+  end
+
+  private
+
+  def enqueue_import
+    ImportFavoritesJob.perform_later(self)
   end
 end
