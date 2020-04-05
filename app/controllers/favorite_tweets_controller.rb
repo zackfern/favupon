@@ -23,6 +23,6 @@ class FavoriteTweetsController < ApplicationController
       ImportFavoritesJob.perform_now(current_user)
     end
 
-    redirect_to :index
+    redirect_to :favorite_tweets
   end
 end
