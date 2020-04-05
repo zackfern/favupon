@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   has_many :favorite_tweets
 
+  after_create :enqueue_import
+
   class << self
     # Public: Find or create a User record based off of the Omniauth auth hash.
     # Returns User
@@ -18,5 +20,11 @@ class User < ApplicationRecord
       config.access_token = access_token
       config.access_token_secret = access_secret
     end
+  end
+
+  private
+
+  def enqueue_import
+    ImportFavoritesJob.perform_later(self)
   end
 end
