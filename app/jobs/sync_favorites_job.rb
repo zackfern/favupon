@@ -32,8 +32,8 @@ class SyncFavoritesJob < ApplicationJob
     @max_favorited_id = favorites.collect(&:id).max
     user.update_attribute(:max_favorited_id, @max_favorited_id) unless @max_favorited_id.nil?
 
-    # If the # of favorites returned was > 199, call again so we can keep paginating...
-    if favorites.count > 199
+    # If the # of favorites returned was > 100, call again so we can keep paginating...
+    if favorites.count > 100
       # Recursively call this method to do it again.
       recursively_fetch_and_save_favorites
     end

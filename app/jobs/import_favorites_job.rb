@@ -30,8 +30,8 @@ class ImportFavoritesJob < ApplicationJob
     @min_favorited_id = favorites.collect(&:id).min
     updated = user.update_attribute(:min_favorited_id, @min_favorited_id)
 
-    # If the # of favorites returned was > 199, call again so we can keep paginating...
-    if favorites.count > 199
+    # If the # of favorites returned was > 100, call again so we can keep paginating...
+    if favorites.count > 100
       # Recursively call this method to do it again.
       Rails.logger.debug "calling recursively_fetch_and_save_favorites again"
       recursively_fetch_and_save_favorites
