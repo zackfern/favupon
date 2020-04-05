@@ -35,6 +35,8 @@ gem 'omniauth-twitter'
 # Twitter Gem for interacting with The Tweets™
 gem 'twitter'
 
+gem 'sidekiq'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
